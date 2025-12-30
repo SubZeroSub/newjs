@@ -667,6 +667,15 @@ body.modal-open {
     background:rgba(15,5,40,.95) !important;
   }
   
+  .hero{
+    height:70vh !important;
+  }
+  
+  .section{
+    padding:60px 20px !important;
+    min-height:auto !important;
+  }
+  
   #overlay {
     padding: 30px 20px;
     border-radius: 12px;
