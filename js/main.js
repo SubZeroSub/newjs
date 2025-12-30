@@ -2,7 +2,16 @@
 
 import * as THREE from "https://cdn.jsdelivr.net/npm/three@0.182.0/build/three.module.js";
 
-// 3D: Летающие настоящие карты
+// Детекция мобильных устройств
+const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) || window.innerWidth < 768;
+
+// Общие переменные для карт
+const suits = ['clubs', 'diamonds', 'hearts', 'spades'];
+const ranks = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
+const cardsBaseUrl = 'assets/cards/';
+
+// 3D: Летающие настоящие карты (отключено на мобильных)
+if (!isMobile) {
 const scene = new THREE.Scene();
 scene.background = new THREE.Color(0x0a001f);
 const camera = new THREE.PerspectiveCamera(60, innerWidth / innerHeight, 0.1, 100);
@@ -174,11 +183,6 @@ scene.add(smokePlane);
 
 const loader = new THREE.TextureLoader();
 
-const suits = ['clubs', 'diamonds', 'hearts', 'spades'];
-const ranks = ['A', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K'];
-
-const cardsBaseUrl = 'assets/cards/';
-
 const cardGeometry = new THREE.PlaneGeometry(0.8, 1.2);
 
 const cards = [];
@@ -304,9 +308,15 @@ function animateCards() {
   requestAnimationFrame(animateCards);
 }
 animateCards();
+} else {
+  // Мобильная версия - скрываем 3D canvas
+  const threeCanvas = document.getElementById('three');
+  if (threeCanvas) threeCanvas.style.display = 'none';
+}
 
-// Магический дым
+// Магический дым (отключен на мобильных)
 function magicSmoke() {
+  if (isMobile) return; // Отключаем на мобильных
   const s = document.getElementById("particles-canvas");
   if (!s) {
     console.error("particles-canvas not found");
@@ -402,6 +412,28 @@ addEventListener("scroll", () => {
 
 // SVG-only preloader animation (replaces canvas implementation)
 function initSVGPreloader() {
+  if (isMobile) {
+    // Упрощенный прелоадер для мобильных
+    const progressText = document.getElementById('progressText');
+    const progressCircle = document.getElementById('progress');
+    let progress = 0;
+    
+    function quickLoad() {
+      progress += 5;
+      if (progressText) progressText.textContent = `${progress}%`;
+      if (progressCircle) {
+        const circumference = 2 * Math.PI * 50;
+        progressCircle.style.strokeDashoffset = String(circumference * (1 - progress/100));
+      }
+      
+      if (progress < 100) {
+        setTimeout(quickLoad, 50);
+      }
+    }
+    quickLoad();
+    return;
+  }
+  
   const svg = document.getElementById('preloader-svg');
   if (!svg) return;
 
@@ -597,8 +629,9 @@ projects.forEach(p => {
   cardsContainer.appendChild(card);
 });
 
-// 3D Tilt эффект для карточек
+// 3D Tilt эффект для карточек (отключен на мобильных)
 function init3DTilt() {
+  if (isMobile) return;
   const cards = document.querySelectorAll('.card');
   
   cards.forEach(card => {
@@ -632,8 +665,9 @@ function init3DTilt() {
 // Инициализация после создания карточек
 init3DTilt();
 
-// Голографический эффект
+// Голографический эффект (отключен на мобильных)
 function initHologram() {
+  if (isMobile) return;
   document.querySelectorAll('.card').forEach(card => {
     card.addEventListener('mousemove', e => {
       const rect = card.getBoundingClientRect();
@@ -651,8 +685,9 @@ function initHologram() {
   });
 }
 
-// Параллакс звезд с глубиной
+// Параллакс звезд с глубиной (отключен на мобильных)
 function initStarField() {
+  if (isMobile) return;
   const layers = 3;
   
   for(let layer = 0; layer < layers; layer++) {
@@ -929,6 +964,7 @@ document.querySelectorAll(".close").forEach(btn => {
 
 // Resize
 addEventListener("resize", () => {
+  if (isMobile) return; // Отключаем на мобильных
   camera.aspect = innerWidth / innerHeight;
   camera.updateProjectionMatrix();
   renderer.setSize(innerWidth, innerHeight);

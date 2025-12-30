@@ -499,7 +499,7 @@ body.modal-open {
 }
 
 /* Add sparkle effect - pseudo element */
-.card::after {
+.card .sparkle {
   content: '✨';
   position: absolute;
   top: -10px;
@@ -627,33 +627,51 @@ body.modal-open {
 
 .close{
   position:absolute;
-  top:30px;
-  right:40px;
-  font-size:50px;
+  top:20px;
+  right:30px;
+  font-size:32px;
   cursor:pointer;
   z-index:10;
   color:rgba(255,255,255,0.7);
   transition:all .3s;
-  background:rgba(0,0,0,0.3);
-  border-radius:50%;
-  width:60px;
-  height:60px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  backdrop-filter:blur(10px);
+  background:none !important;
+  border:none !important;
+  outline:none !important;
 }
 
 .close:hover{
   color:rgba(255,255,255,1);
-  background:rgba(157,78,221,0.4);
   transform:rotate(90deg) scale(1.1);
+  background:none !important;
 }
 
 @media (max-width:768px){
+  /* Отключаем тяжелые эффекты на мобильных */
+  .card{
+    backdrop-filter:none !important;
+    background:rgba(20,10,50,.9) !important;
+  }
+  
+  .card::after,
+  .card::before{
+    display:none !important;
+  }
+  
+  #modal,#lightbox{
+    backdrop-filter:none !important;
+    background:rgba(5,0,20,.98) !important;
+  }
+  
+  .modal-content,.lightbox-content{
+    backdrop-filter:none !important;
+    background:rgba(15,5,40,.95) !important;
+  }
+  
   #overlay {
     padding: 30px 20px;
     border-radius: 12px;
+    backdrop-filter:none !important;
+    background:rgba(10,0,31,0.8) !important;
   }
   
   #overlay h1 {
