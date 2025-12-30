@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MYSTERY — MASTER OF ILLUSIONS</title>
+
+  <!-- Подключаем CSS -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- Шрифты Google -->
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter&display=swap" rel="stylesheet">
+</head>
+<body>
+
+  <!-- Прелоадер с собирающейся колодой -->
+  <div id="preloader">
+    <div class="preloader-content">
+      <!-- SVG preloader: morphing card + circular progress -->
+      <svg id="preloader-svg" viewBox="0 0 200 250" aria-hidden="true" role="img">
+        <defs>
+          <linearGradient id="cardGrad" x1="0" x2="1">
+            <stop offset="0%" stop-color="#9d4edd"/>
+            <stop offset="50%" stop-color="#ffd700"/>
+            <stop offset="100%" stop-color="#ff3366"/>
+          </linearGradient>
+          <filter id="glow">
+            <feGaussianBlur stdDeviation="6" result="b"/>
+            <feMerge>
+              <feMergeNode in="b"/>
+              <feMergeNode in="SourceGraphic"/>
+            </feMerge>
+          </filter>
+        </defs>
+        <g transform="translate(100,120)">
+          <rect id="cardShape" x="-70" y="-100" width="140" height="200" rx="12" ry="12" fill="url(#cardGrad)" filter="url(#glow)"/>
+          <circle id="progressBg" cx="0" cy="30" r="50" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="8"/>
+          <circle id="progress" cx="0" cy="30" r="50" fill="none" stroke="#ffd700" stroke-width="8" stroke-linecap="round" transform="rotate(-90)" stroke-dasharray="314" stroke-dashoffset="314"/>
+          <text id="progressText" x="0" y="36" text-anchor="middle" font-family="Inter, sans-serif" font-weight="700" font-size="28" fill="#fff">0%</text>
+        </g>
+      </svg>
+      <div class="preloader-text">Assembling the Deck...</div>
+    </div>
+  </div>
+
+  <!-- 3D canvas для парящих карт -->
+  <canvas id="three"></canvas>
+
+  <!-- Canvas для частиц -->
+  <canvas id="particles-canvas"></canvas>
+
+  <!-- Canvas для магического дыма -->
+  <canvas id="stars"></canvas>
+
+  <!-- Hero с заголовком -->
+  <div class="hero" id="hero">
+    <div id="overlay">
+      <h1>ЕВГЕНИЙ КАВЕРЗИН</h1>
+      <div class="subtitle">Персональный сайт</div>
+      <p>UNBELIEVABLE MAGIC</p>
+    </div>
+  </div>
+
+  <!-- Секция с карточками -->
+  <div class="section">
+    <div class="cards" id="cards"></div>
+  </div>
+
+  <!-- Основная модалка -->
+  <div id="modal">
+    <div class="modal-content">
+      <button class="close">×</button>
+      <div class="modal-header">
+        <h2 id="mt"></h2>
+      </div>
+      <div id="modal-body"></div>
+    </div>
+  </div>
+
+  <!-- Lightbox для галереи -->
+  <div id="lightbox">
+    <div class="lightbox-content">
+      <button class="close">×</button>
+      <div class="lightbox-slider" id="lightbox-slider"></div>
+      <div class="lightbox-arrow lightbox-prev">‹</div>
+      <div class="lightbox-arrow lightbox-next">›</div>
+    </div>
+  </div>
+
+  <!-- Подключаем JS -->
+  <script type="module" src="js/main.js" defer></script>
+
+</body>
+</html>
